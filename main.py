@@ -363,7 +363,7 @@ class AI(pygame.sprite.Sprite):
         # Time
         score += self.start_time / app.current_time * 100
         # List len
-        score += 1/len(self.cmd_list) * 100
+        score -= len(self.cmd_list)
         return score
 
 
