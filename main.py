@@ -167,7 +167,7 @@ class App:
 
     def map_generate(self, load=True):
         # Grid setup
-        last_bottom = 0
+        block, last_bottom = pygame.sprite.Sprite(), 0
         for j in range(self.map_size):
             blocks_line, last_right = pygame.sprite.Group(), 0
             for i in range(self.map_size):
@@ -216,7 +216,7 @@ class App:
 
     def get_the_winner(self):
         """Gets the winner and returns it's cmd list"""
-        winner = pygame.sprite.Sprite()
+        '''winner = pygame.sprite.Sprite()
         for ai in self.ais:
             ai_score = ai.calculate_score()
             if ai_score > self.best_score:
@@ -227,7 +227,17 @@ class App:
             self.best_score_cmds = len(self.last_cmd_list)
             return list(self.last_cmd_list)
         except AttributeError:
-            return self.last_cmd_list
+            return self.last_cmd_list'''
+
+        winner = AI(app)
+        self.best_score = 0
+        for ai in self.ais:
+            ai_score = ai.calculate_score()
+            if ai_score > self.best_score:
+                winner = ai
+                self.best_score = ai_score
+        self.best_score_cmds = len(winner.cmd_list)
+        return winner.cmd_list
 
     def generate_mutation_list(self,
                                pop_percentages=(.7, .2, .1),
